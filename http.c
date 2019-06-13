@@ -18,7 +18,24 @@ int main()
     struct sockaddr cliaddr;
 
     socklen_t sa_len=sizeof(cliaddr);
-    char *welcomeMsg = "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 12\n\nHello world!";
+    char * buffer = 0;
+    long length;
+    char *simpleHeader = "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 12\r\n";
+
+    FILE * file = fopen ("index.html", "r");
+
+    if (file) {
+    fseek (file, 0, SEEK_END);
+    length = ftell (file);
+    fseek (file, 0, SEEK_SET);
+    bufferFile = malloc (length);
+    fread (bufferFile, 1, strlen(simpleHeader), simpleHeader);
+    if (bufferFile) {
+        fread (bufferFile, 1, length, file);
+    }
+    fclose (file);
+
+    
     
     listen_fd = socket(AF_INET, SOCK_STREAM, 0);
  
