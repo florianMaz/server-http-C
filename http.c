@@ -11,31 +11,32 @@
 int main()
 {
         
-    char buffer[4096]
+    char buffer[4096];
     int listen_fd, conn_fd;
 
     struct sockaddr_in servaddr;
     struct sockaddr cliaddr;
 
     socklen_t sa_len=sizeof(cliaddr);
-    char * buffer = 0;
+    char * bufferFile = 0;
     long length;
-    char *simpleHeader = "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 12\r\n";
-
+    char *simpleHeader = "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 12\r\nHello world!";
+/*
     FILE * file = fopen ("index.html", "r");
 
     if (file) {
-    fseek (file, 0, SEEK_END);
-    length = ftell (file);
-    fseek (file, 0, SEEK_SET);
-    bufferFile = malloc (length);
-    fread (bufferFile, 1, strlen(simpleHeader), simpleHeader);
-    if (bufferFile) {
-        fread (bufferFile, 1, length, file);
+        fseek (file, 0, SEEK_END);
+        length = ftell (file);
+        fseek (file, 0, SEEK_SET);
+        bufferFile = malloc (length);
+        fread (bufferFile, 1, strlen(simpleHeader), simpleHeader);
+        if (bufferFile) {
+            fread (bufferFile, 1, length, file);
+        }
+        fclose (file);
     }
-    fclose (file);
 
-    
+    */
     
     listen_fd = socket(AF_INET, SOCK_STREAM, 0);
  
@@ -60,7 +61,7 @@ int main()
 
     
  
-        write(conn_fd, welcomeMsg, strlen(welcomeMsg)+1);
+        write(conn_fd, simpleHeader, strlen(simpleHeader)+1);
         close(conn_fd);
     }
 
